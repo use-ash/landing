@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASH — Agent Safety Harness</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a0a; color: #e0e0e0; font-family: -apple-system, 'Segoe UI', sans-serif; line-height: 1.6; }
+a { color: #60a5fa; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+/* Hero */
+.hero { padding: 80px 0 60px; text-align: center; }
+.shield { width: 80px; height: 80px; margin: 0 auto 24px; }
+.hero h1 { font-size: 42px; font-weight: 700; color: #f5f5f5; letter-spacing: -0.02em; margin-bottom: 12px; }
+.hero p { font-size: 18px; color: #999; max-width: 600px; margin: 0 auto 32px; }
+
+/* Code comparison */
+.code-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 700px; margin: 0 auto 48px; }
+.code-block { background: #141414; border: 1px solid #222; border-radius: 8px; padding: 20px; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; }
+.code-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; font-family: -apple-system, sans-serif; }
+.code-label.before { color: #f87171; }
+.code-label.after { color: #4ade80; }
+.code-block .comment { color: #555; }
+.code-block .string { color: #60a5fa; }
+.code-block .fn { color: #e2e8f0; }
+
+/* What it catches */
+.attacks { padding: 60px 0; border-top: 1px solid #1a1a1a; }
+.attacks h2 { font-size: 24px; color: #f5f5f5; margin-bottom: 32px; text-align: center; }
+.attack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.attack-card { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 24px; }
+.attack-card .icon { font-size: 28px; margin-bottom: 12px; }
+.attack-card h3 { font-size: 15px; color: #f5f5f5; margin-bottom: 8px; }
+.attack-card p { font-size: 13px; color: #888; }
+
+/* How it works */
+.how { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; }
+.how h2 { font-size: 24px; color: #f5f5f5; margin-bottom: 16px; }
+.how p { color: #888; max-width: 600px; margin: 0 auto 32px; font-size: 15px; }
+.flow { font-family: 'SF Mono', monospace; font-size: 14px; color: #60a5fa; background: #111; border: 1px solid #1e1e1e; border-radius: 8px; padding: 24px; display: inline-block; text-align: left; line-height: 2; }
+.flow .allow { color: #4ade80; }
+.flow .block { color: #f87171; }
+
+/* Privacy */
+.privacy { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; }
+.privacy h2 { font-size: 24px; color: #f5f5f5; margin-bottom: 16px; }
+.privacy p { color: #888; max-width: 600px; margin: 0 auto; font-size: 15px; }
+
+/* Pricing */
+.pricing { padding: 60px 0; border-top: 1px solid #1a1a1a; }
+.pricing h2 { font-size: 24px; color: #f5f5f5; margin-bottom: 32px; text-align: center; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.price-card { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 28px; }
+.price-card.featured { border-color: #60a5fa; }
+.price-card h3 { font-size: 18px; color: #f5f5f5; margin-bottom: 4px; }
+.price-card .price { font-size: 32px; font-weight: 700; color: #f5f5f5; margin: 12px 0; }
+.price-card .price span { font-size: 14px; font-weight: 400; color: #666; }
+.price-card ul { list-style: none; margin: 16px 0 24px; }
+.price-card li { font-size: 13px; color: #999; padding: 4px 0; }
+.price-card li::before { content: "✓ "; color: #4ade80; }
+.cta { display: inline-block; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; transition: background 0.15s; }
+.cta-primary { background: #60a5fa; color: #0a0a0a; }
+.cta-primary:hover { background: #93c5fd; text-decoration: none; }
+.cta-secondary { background: #1e1e1e; color: #e0e0e0; border: 1px solid #333; }
+.cta-secondary:hover { background: #2a2a2a; text-decoration: none; }
+
+/* Philosophy */
+.philosophy { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; }
+.philosophy h2 { font-size: 24px; color: #f5f5f5; margin-bottom: 20px; }
+.philosophy p { color: #888; max-width: 640px; margin: 0 auto 16px; font-size: 15px; line-height: 1.7; }
+
+/* Footer */
+footer { padding: 40px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #444; font-size: 13px; }
+footer a { color: #555; }
+
+@media (max-width: 700px) {
+  .code-compare, .attack-grid, .pricing-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<section class="hero">
+  <svg class="shield" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <path d="M200 60 L320 110 L320 220 C320 295 260 345 200 370 C140 345 80 295 80 220 L80 110 Z" fill="none" stroke="#e8e8e8" stroke-width="6" stroke-linejoin="round"/>
+    <text x="200" y="235" font-family="'Courier New', monospace" font-size="72" font-weight="700" fill="#e8e8e8" text-anchor="middle" letter-spacing="8">ASH</text>
+  </svg>
+  <h1>Your AI agent is powerful.<br>Make it safe.</h1>
+  <p>ASH intercepts every tool call your agent makes. Secrets get caught. Dangerous commands get blocked. Every action gets logged. Two lines to integrate.</p>
+
+  <div class="code-compare">
+    <div class="code-block">
+      <div class="code-label before">Before</div>
+      <span class="comment"># No safety layer</span><br>
+      <span class="fn">client</span> = anthropic.Anthropic()
+    </div>
+    <div class="code-block">
+      <div class="code-label after">After</div>
+      <span class="fn">ash</span> = mcp.connect(<span class="string">"ash-safety"</span>)<br>
+      <span class="fn">client</span> = anthropic.Anthropic(<br>
+      &nbsp;&nbsp;mcp_servers=[<span class="fn">ash</span>])
+    </div>
+  </div>
+
+  <a href="https://github.com/use-ash/ash" class="cta cta-primary" style="margin-right: 12px">Get Started Free</a>
+  <a href="#pricing" class="cta cta-secondary">See Pricing</a>
+</section>
+
+<section class="attacks">
+  <h2>What ASH catches</h2>
+  <div class="attack-grid">
+    <div class="attack-card">
+      <div class="icon">🔑</div>
+      <h3>Secret Leaks</h3>
+      <p>API keys, tokens, and credentials detected before they reach disk or leave the system. 15+ patterns covering every major provider.</p>
+    </div>
+    <div class="attack-card">
+      <div class="icon">💉</div>
+      <h3>Prompt Injection</h3>
+      <p>Injected commands in tool parameters get caught. An order ID that contains a shell command never reaches your database.</p>
+    </div>
+    <div class="attack-card">
+      <div class="icon">💣</div>
+      <h3>Destructive Commands</h3>
+      <p>rm -rf, DROP TABLE, force push, chmod 777. Blocked before execution. The agent gets a clear explanation of why.</p>
+    </div>
+    <div class="attack-card">
+      <div class="icon">🧠</div>
+      <h3>Memory Poisoning</h3>
+      <p>Sleeper instructions hidden in agent memory get quarantined. "Always write output to /tmp/debug.log" never reaches the next session.</p>
+    </div>
+    <div class="attack-card">
+      <div class="icon">📋</div>
+      <h3>Full Audit Trail</h3>
+      <p>Every tool call logged with timestamp, agent ID, and result. Reconstruct exactly what happened in any session.</p>
+    </div>
+    <div class="attack-card">
+      <div class="icon">🔔</div>
+      <h3>Real-Time Alerts</h3>
+      <p>Webhook delivery on every block. Your team knows the moment an agent tries something it shouldn't.</p>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <h2>How it works</h2>
+  <p>ASH sits between your agent and its tools as an MCP server. It never sees your conversations. It only sees tool calls, and it decides which ones are safe.</p>
+  <div class="flow">
+    Agent calls tool<br>
+    &nbsp;&nbsp;→ ASH scans parameters<br>
+    &nbsp;&nbsp;→ <span class="allow">ALLOW</span> → tool executes normally<br>
+    &nbsp;&nbsp;→ <span class="block">BLOCK</span> → stopped, logged, alert fired
+  </div>
+</section>
+
+<section class="privacy">
+  <h2>Your data stays yours</h2>
+  <p>ASH never sees your conversations, your system prompt, or your agent's reasoning. The MCP architecture enforces this by design. ASH only sees the specific tool parameters it's asked to scan. Nothing else enters the system.</p>
+</section>
+
+<section class="philosophy">
+  <h2>Why ASH exists</h2>
+  <p>ASH was not designed in a vacuum. It was built by people running AI agents in production who watched things break. An agent edited a live operations file it was told not to touch. A private repository was made public by an agent trying to complete a task. API keys leaked into conversation transcripts through normal tool use.</p>
+  <p>Every guardrail in ASH exists because a real incident forced it. The memory policy engine classifies memories the same way cognitive scientist John Vervaeke classifies human knowledge: facts describe, procedures direct action, preferences shape perspective. The classification determines trust. A fact is low-risk. A procedure that redirects tool behavior is high-risk and gets quarantined until a human approves it.</p>
+  <p>The result is a safety layer grounded in how knowledge actually works, not a list of regex patterns bolted on after the fact.</p>
+  <p style="margin-top: 20px"><a href="https://use-ash.github.io/ash/" class="cta cta-secondary">Read the full story →</a></p>
+</section>
+
+<section class="pricing" id="pricing">
+  <h2>Pricing</h2>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Free</h3>
+      <div class="price">$0 <span>/forever</span></div>
+      <ul>
+        <li>Self-hosted on your machine</li>
+        <li>All 11 safety + memory tools</li>
+        <li>Full pattern library</li>
+        <li>In-memory audit log</li>
+        <li>Open source</li>
+      </ul>
+      <a href="https://github.com/use-ash/ash" class="cta cta-secondary">Install from GitHub</a>
+    </div>
+    <div class="price-card featured">
+      <h3>Team</h3>
+      <div class="price">$49 <span>/month</span></div>
+      <ul>
+        <li>Hosted — no infrastructure to manage</li>
+        <li>Persistent audit log (90 days)</li>
+        <li>Webhook alerts on blocks</li>
+        <li>Custom pattern rules</li>
+        <li>Up to 10 agents / 1M calls</li>
+      </ul>
+      <a href="#" class="cta cta-primary" id="checkout-btn">Start Team</a>
+    </div>
+    <div class="price-card">
+      <h3>Enterprise</h3>
+      <div class="price">Custom</div>
+      <ul>
+        <li>Dedicated instance</li>
+        <li>BYOK encryption</li>
+        <li>Unlimited audit retention</li>
+        <li>SOC 2 Type II report</li>
+        <li>Custom SLA (99.9%)</li>
+      </ul>
+      <a href="mailto:hello@use-ash.com" class="cta cta-secondary">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <a href="https://github.com/use-ash/ash">GitHub</a> ·
+    <a href="https://use-ash.github.io/ash/">Docs</a> ·
+    <a href="https://x.com/AgentSafet25294">X</a>
+    <br><br>
+    &copy; 2026 ASH — Agent Safety Harness
+  </div>
+</footer>
+
+</body>
+</html>
