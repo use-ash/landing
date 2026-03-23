@@ -95,8 +95,9 @@ footer a { color: #555; }
   <p>ASH intercepts every tool call your agent makes. Secrets get caught. Dangerous commands get blocked. Every action gets logged.</p>
 
   <div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px">
-    <span style="background:#1e1e1e;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:12px;color:#999;cursor:pointer" onclick="document.getElementById('tab-hooks').style.display='block';document.getElementById('tab-mcp').style.display='none';this.style.borderColor='#60a5fa';this.style.color='#e0e0e0';this.nextElementSibling.style.borderColor='#333';this.nextElementSibling.style.color='#999'">Claude Code / Codex</span>
-    <span style="background:#1e1e1e;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:12px;color:#999;cursor:pointer" onclick="document.getElementById('tab-mcp').style.display='block';document.getElementById('tab-hooks').style.display='none';this.style.borderColor='#60a5fa';this.style.color='#e0e0e0';this.previousElementSibling.style.borderColor='#333';this.previousElementSibling.style.color='#999'">Custom Agents / SDK</span>
+    <span id="btn-hooks" style="background:#1e1e1e;border:1px solid #60a5fa;padding:6px 14px;border-radius:20px;font-size:12px;color:#e0e0e0;cursor:pointer" onclick="showTab('hooks')">Claude Code</span>
+    <span id="btn-codex" style="background:#1e1e1e;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:12px;color:#999;cursor:pointer" onclick="showTab('codex')">Codex Desktop</span>
+    <span id="btn-mcp" style="background:#1e1e1e;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:12px;color:#999;cursor:pointer" onclick="showTab('mcp')">Custom Agents</span>
   </div>
 
   <div id="tab-hooks" style="display:block">
@@ -117,6 +118,24 @@ footer a { color: #555; }
     <p style="text-align:center;color:#666;font-size:12px;margin-top:8px">PreToolUse hooks fire on every tool call. The agent cannot skip them.</p>
   </div>
 
+  <div id="tab-codex" style="display:none">
+    <div class="code-compare">
+      <div class="code-block">
+        <div class="code-label before">Default Codex</div>
+        <span class="comment"># Full access, no prompts</span><br>
+        <span class="fn">sandbox</span> = <span class="string">"danger-full-access"</span><br>
+        <span class="fn">approval</span> = <span class="string">"on-request"</span>
+      </div>
+      <div class="code-block">
+        <div class="code-label after">With ASH config</div>
+        <span class="comment"># Sandbox + approval + deny rules</span><br>
+        <span class="fn">sandbox</span> = <span class="string">"workspace-write"</span><br>
+        <span class="fn">approval</span> = <span class="string">"untrusted"</span>
+      </div>
+    </div>
+    <p style="text-align:center;color:#666;font-size:12px;margin-top:8px">Three layers: OS sandbox, human approval on writes, deny rules for dangerous commands.</p>
+  </div>
+
   <div id="tab-mcp" style="display:none">
     <div class="code-compare">
       <div class="code-block">
@@ -133,6 +152,17 @@ footer a { color: #555; }
     </div>
     <p style="text-align:center;color:#666;font-size:12px;margin-top:8px">MCP integration for agents built with the Anthropic or OpenAI SDK.</p>
   </div>
+
+  <script>
+  function showTab(name) {
+    ['hooks','codex','mcp'].forEach(t => {
+      document.getElementById('tab-'+t).style.display = t===name ? 'block' : 'none';
+      var btn = document.getElementById('btn-'+t);
+      btn.style.borderColor = t===name ? '#60a5fa' : '#333';
+      btn.style.color = t===name ? '#e0e0e0' : '#999';
+    });
+  }
+  </script>
 
   <a href="https://github.com/use-ash/ash" class="cta cta-primary" style="margin-right: 12px">Get Started Free</a>
   <a href="#pricing" class="cta cta-secondary">See Pricing</a>
