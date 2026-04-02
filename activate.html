@@ -107,6 +107,12 @@ async function activate() {
     document.getElementById('licenseText').textContent = payload;
     document.getElementById('licenseSection').classList.remove('hidden');
 
+    // Ephemeral warning
+    const warn = document.createElement('div');
+    warn.style.cssText = 'margin-top:12px;padding:10px 14px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:6px;font-size:12px;color:#F59E0B';
+    warn.textContent = 'This key is shown once. Copy it now — refreshing this page will not show it again.';
+    document.getElementById('licenseSection').appendChild(warn);
+
   } catch (err) {
     statusBox.className = 'status error';
     statusBox.textContent = err.message;
